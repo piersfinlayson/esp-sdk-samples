@@ -1,0 +1,26 @@
+Some sample ESP8266 Open SDK based apps for Metaswitch's 2016 Engineering Conference.
+
+Build
+-----
+
+Run make in app's directory.  Set up SDK_BASE beforehand.
+
+Run make flash
+
+Run make connect
+
+Contents
+--------
+
+- boiler
+  - Some boilerplate code for an ESP8266 SDK app.  Doesn't do anything else.
+
+- blink
+  - Standard LED blink app
+
+- exception
+  - Accesses a NULL pointer to show an exception being thrown
+
+- wifi_led
+  - Shows off use of WiFi APIs, plus flashes and LED wifi connecting or hitting
+    errors 
