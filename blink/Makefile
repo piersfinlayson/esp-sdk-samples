@@ -1,6 +1,7 @@
 # Makefile for esp-sdk-samples
 SDK_BASE ?= ~/esp-open-sdk
 SDK_BIN ?= $(SDK_BASE)/xtensa-lx106-elf/bin
+PATH := $(SDK_BIN):$(PATH)
 CC = $(SDK_BIN)/xtensa-lx106-elf-gcc
 ESPTOOL ?= $(SDK_BIN)/esptool.py
 CFLAGS = -Os -Iinclude -I./ -mlongcalls
