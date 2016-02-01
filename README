@@ -3,6 +3,8 @@ Some sample ESP8266 Open SDK based apps for Metaswitch's 2016 Engineering Confer
 Build
 -----
 
+Make sure esp-open-sdk/xtensa-lx106-elf/bin is in path - run . ./fix_path.sh to do this assuming esp-open-sdk is in ~
+
 Run make in app's directory.  Set up SDK_BASE beforehand.
 
 Run make flash
