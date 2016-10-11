@@ -1,0 +1,1 @@
+Replace -fs pdf in the flash rule with a valid size (such as 32mb) or add support for other sizes in esptool.py.
