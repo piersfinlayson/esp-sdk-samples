@@ -15,7 +15,7 @@ app_image: user_main.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 flash: app_image-0x00000.bin
-	$(ESPTOOL) -b 230400 write_flash -fs pdf 0 app_image-0x00000.bin 0x40000 app_image-0x40000.bin
+	$(ESPTOOL) -b 230400 write_flash -fs 32m 0 app_image-0x00000.bin 0x40000 app_image-0x40000.bin
 
 connect:
 	platformio serialports monitor -b 74880
