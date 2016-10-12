@@ -34,7 +34,7 @@
 #define IRAM_ATTR
 #endif
 
-extern SpiFlashChip  flashchip;
+extern SpiFlashChip *flashchip;
 
 #define user_procTaskPrio        0
 #define user_procTaskQueueLen    1
@@ -43,7 +43,6 @@ static void user_procTask(os_event_t *events);
 
 static volatile os_timer_t some_timer;
 
-SpiFlashChip *_flashchip;
 uint32_t flash_size_sdk;
 uint32_t flash_size_actual;
 uint8_t byte_to_write = 0x80;
@@ -60,11 +59,11 @@ SpiFlashOpResult _spi_flash_erase_sector(uint16 sector)
 {
   int8 status=0;
 
-  _flashchip->chip_size = flash_size_actual;
+  flashchip->chip_size = flash_size_actual;
 
   status = spi_flash_erase_sector(sector);
 
-  _flashchip->chip_size = flash_size_sdk; // restore chip size
+  flashchip->chip_size = flash_size_sdk; // restore chip size
 
   return status;
 }
@@ -73,11 +72,11 @@ SpiFlashOpResult _spi_flash_write(uint32 des_addr, uint32 *src_addr, uint32 size
 {
   int8 status=0;
 
-  _flashchip->chip_size = flash_size_actual;
+  flashchip->chip_size = flash_size_actual;
 
   status = spi_flash_write(des_addr, src_addr, size);
 
-  _flashchip->chip_size = flash_size_sdk; // restore chip size
+  flashchip->chip_size = flash_size_sdk; // restore chip size
 
   return status;
 }
@@ -86,11 +85,11 @@ SpiFlashOpResult _spi_flash_read(uint32 src_addr, uint32 *des_addr, uint32 size)
 {
   int8 status=0;
   
-  _flashchip->chip_size = flash_size_actual;
+  flashchip->chip_size = flash_size_actual;
 
   status = spi_flash_read(src_addr, des_addr, size);
 
-  _flashchip->chip_size = flash_size_sdk; // restore chip size
+  flashchip->chip_size = flash_size_sdk; // restore chip size
 
   return status;
 }
@@ -224,17 +223,16 @@ user_init()
       break;
   }
   ets_printf("\r\n");
-  ets_printf("ESP8266 flashchip struct:  0x%x\r\n", (uint32_t)flashchip.deviceId);
-  _flashchip = (SpiFlashChip *)flashchip.deviceId;
-  ets_printf("ESP8266 flash deviceId:    0x%x\r\n", _flashchip->deviceId);
-  ets_printf("ESP8266 flash chip_size:   0x%x\r\n", _flashchip->chip_size);
-  ets_printf("ESP8266 flash block_size:  0x%x\r\n", _flashchip->block_size);
-  ets_printf("ESP8266 flash sector_size: 0x%x\r\n", _flashchip->sector_size);
-  ets_printf("ESP8266 flash page_size:   0x%x\r\n", _flashchip->page_size);
-  ets_printf("ESP8266 flash status_mask: 0x%x\r\n", _flashchip->status_mask);
+  ets_printf("ESP8266 flashchip struct:  0x%x\r\n", (uint32_t)flashchip);
+  ets_printf("ESP8266 flash deviceId:    0x%x\r\n", flashchip->deviceId);
+  ets_printf("ESP8266 flash chip_size:   0x%x\r\n", flashchip->chip_size);
+  ets_printf("ESP8266 flash block_size:  0x%x\r\n", flashchip->block_size);
+  ets_printf("ESP8266 flash sector_size: 0x%x\r\n", flashchip->sector_size);
+  ets_printf("ESP8266 flash page_size:   0x%x\r\n", flashchip->page_size);
+  ets_printf("ESP8266 flash status_mask: 0x%x\r\n", flashchip->status_mask);
 
   // For some reason everything is offset by 4 bytes - so use block size instead!
-  flash_size_sdk = _flashchip->chip_size;
+  flash_size_sdk = flashchip->chip_size;
   ets_printf("SDK flash size:    %d bytes\r\n", flash_size_sdk);
   
   flash_size_actual = 1;
