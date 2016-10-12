@@ -1,1 +1,6 @@
-Replace -fs pdf in the flash rule with a valid size (such as 32mb) or add support for other sizes in esptool.py.
+
+A simple test program designed to erase and write a sector at 1MB intervals on the 
+installed flash chip, up to the detected flash size.  (The maximum ESP8266 claims to
+support is 16MB, but the SDK spi_flash functions as they stand don't support >4MB
+hence the wrapper functions starting _spi_*.
+
