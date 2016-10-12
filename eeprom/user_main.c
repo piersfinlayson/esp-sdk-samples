@@ -19,7 +19,7 @@
  * A simple test program designed to erase and write a sector at 1MB intervals on the 
  * installed flash chip, up to the detected flash size.  (The maximum ESP8266 claims to
  * support is 16MB, but the SDK spi_flash functions as they stand don't support >4MB
- * hence the wrapper functions starting _spi_*.
+ * hence the wrapper functions starting _spi_*.)
  */
 
 
@@ -234,7 +234,7 @@ user_init()
   ets_printf("ESP8266 flash status_mask: 0x%x\r\n", _flashchip->status_mask);
 
   // For some reason everything is offset by 4 bytes - so use block size instead!
-  flash_size_sdk = _flashchip->chip_size;
+  flash_size_sdk = _flashchip->chip:1_size;
   ets_printf("SDK flash size:    %d bytes\r\n", flash_size_sdk);
   
   flash_size_actual = 1;
