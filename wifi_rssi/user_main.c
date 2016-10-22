@@ -20,16 +20,15 @@ struct station_config wifi_conf;
 void some_timerfunc(void *arg)
 {
   int wifi_status;
+  sint8 rssi;
  
   if ((!connected) && (!connecting))
   {
-    strcpy((char *)wifi_conf.ssid, "test");
-    strcpy((char *)wifi_conf.password, "test");
-    wifi_conf.bssid_set = FALSE;
     ETS_UART_INTR_DISABLE();
     wifi_station_set_config_current(&wifi_conf);
     ETS_UART_INTR_ENABLE();
     connected = wifi_station_connect();
+    connecting = TRUE;
   }
 
   if (connecting)
@@ -62,6 +61,12 @@ void some_timerfunc(void *arg)
   {
     dhcpc_started = wifi_station_dhcpc_start();
   }
+  
+  if (connected)
+  {
+    rssi = wifi_station_get_rssi();
+    ets_printf("RSSI: %d\r\n", rssi);
+  }
 }
 
 //Do nothing function
@@ -72,11 +77,14 @@ user_procTask(os_event_t *events)
 }
 
 //Init function 
-void ICACHE_FLASH_ATTR
-user_init()
+void ICACHE_FLASH_ATTR user_init()
 {
+  // Set up wifi config
+  wifi_conf.bssid_set = 0;
+  os_memcpy(&wifi_conf.ssid, WIFI_AP, strlen(WIFI_AP));
+  os_memcpy(&wifi_conf.password, WIFI_PASSWORD, strlen(WIFI_PASSWORD));
+  
   // Set Wifi mode to station but don't save to flash
-  wifi_status_led_install(4, PERIPHS_IO_MUX_GPIO4_U, FUNC_GPIO4);
   wifi_set_opmode_current(STATION_MODE);
   connected = FALSE;
   connecting = FALSE;
