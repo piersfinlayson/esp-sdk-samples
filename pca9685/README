@@ -1,0 +1,17 @@
+Simple program to control the NXP PCA9685 LED PWM controller with an ESP8266.
+
+This program:
+- Initialises the NXP9685 device at its default address (0x40)
+- Toggles all LEDs on and off
+- Does this on a 2,000ms interval by default
+- Uses brzo_i2c to control the I2C bus
+
+This was verified using a PC9685 driving a ULN2803A, which in turn sinked current for a relay and LED in parallel.  The PCA9685 and ULN2803A were powered using 5V, and the ESP8266 with 3.3V, without a level shifter on the I2C bus (and the I2C bus was pulled up to 5V using 4.7K resistors, and it worked admirably).
+
+Make sure you've clone this repo recursively (to pull in brzo_i2c) and then:
+
+  make flash
+
+to flash the module.
+
+The baud rate of the ESP8266 will be 74,880 (using the default 26KHz crystal).

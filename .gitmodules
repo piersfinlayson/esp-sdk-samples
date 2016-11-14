@@ -1,0 +1,3 @@
+[submodule "pca9685/brzo_i2c"]
+	path = pca9685/brzo_i2c
+	url = https://github.com/piersfinlayson/brzo_i2c
