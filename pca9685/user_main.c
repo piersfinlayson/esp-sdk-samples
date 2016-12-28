@@ -40,7 +40,7 @@ uint8_t reset_i2c(void)
   }
   else
   {
-    ets_printf("failed\r\n");
+    ets_printf("failed %d\r\n", rc);
   }
 
   return rc;

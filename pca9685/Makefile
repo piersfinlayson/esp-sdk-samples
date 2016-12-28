@@ -21,4 +21,4 @@ connect:
 	platformio serialports monitor -b 74880
 
 clean: 
-	@rm -f app_image* *.o
+	@rm -f app_image* *.o brzo_i2c/*.o
