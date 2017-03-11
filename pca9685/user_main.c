@@ -1,3 +1,4 @@
+#define ICACHE_FLASH
 #include "ets_sys.h"
 #include "osapi.h"
 #include "gpio.h"
@@ -15,7 +16,7 @@ bool pca9685_inited = FALSE;
 bool pca9685_on = FALSE;
 #define PCA9685_ADDR 0x40
 
-uint8_t init_i2c(void)
+uint8_t ICACHE_FLASH_ATTR init_i2c(void)
 {
   ets_printf("I2C stack init ... ");
   brzo_i2c_setup(100);
@@ -23,7 +24,7 @@ uint8_t init_i2c(void)
   return 0;
 }
 
-uint8_t reset_i2c(void)
+uint8_t ICACHE_FLASH_ATTR reset_i2c(void)
 {
   uint8_t rc;
   uint8_t bytes[2];
@@ -46,7 +47,7 @@ uint8_t reset_i2c(void)
   return rc;
 }
 
-uint8_t init_pca9685(uint8_t addr)
+uint8_t ICACHE_FLASH_ATTR init_pca9685(uint8_t addr)
 {
   uint8_t rc;
   uint8_t bytes[2];
@@ -91,7 +92,7 @@ EXIT_LABEL:
   return rc;
 }
 
-void toggle_pca9685_leds(uint8_t addr, bool desired_state)
+void ICACHE_FLASH_ATTR toggle_pca9685_leds(uint8_t addr, bool desired_state)
 {
   uint8_t rc;
   bool will_be_on;
@@ -146,7 +147,7 @@ EXIT_LABEL:
   return;
 }
 
-void some_timerfunc(void *arg)
+void ICACHE_FLASH_ATTR some_timerfunc(void *arg)
 {
   uint8_t rc;
 

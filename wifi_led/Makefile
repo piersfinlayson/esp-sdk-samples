@@ -15,10 +15,11 @@ app_image: user_main.o
 	$(CC) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 flash: app_image-0x00000.bin
-	$(ESPTOOL) write_flash 0 app_image-0x00000.bin 0x40000 app_image-0x40000.bin
+	$(ESPTOOL) write_flash 0x3fc000 $(SDK_BASE)/sdk/bin/esp_init_data_default.bin
+	$(ESPTOOL) write_flash 0 app_image-0x00000.bin 0x10000 app_image-0x10000.bin
 
 connect:
-	platformio serialports monitor -b 74880
+	miniterm.py /dev/ttyUSB0 74880 --raw
 
 clean: 
 	@rm -f app_image* *.o
