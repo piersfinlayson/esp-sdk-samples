@@ -1,0 +1,3 @@
+This app communicates with a TPIC6B595 using one-way SPI, via a 74HCT04 which inverts the signal and in the process ups the 3.3V logic level of the ESP8266 to the 0.85Vcc (5V) value the TPIC6B595 required.
+
+It just turns all 8 bits (outputs) one (open drain) and off, every second.
