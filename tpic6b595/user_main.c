@@ -13,7 +13,7 @@ static volatile os_timer_t some_timer;
 
 static int next = 0;
 
-#define ENABLE_MASK BIT4|BIT5|BIT14
+#define ENABLE_MASK BIT4|BIT5|BIT12
 #define SLEEP 1 
 
 void some_timerfunc(void *arg)
@@ -75,11 +75,11 @@ void some_timerfunc(void *arg)
 
   // Register lock
   set_mask = 0;
-  clear_mask = BIT14;
+  clear_mask = BIT12;
   //ets_printf("  output: 0x%8.8x 0x%8.8x\r\n", set_mask, clear_mask);
   gpio_output_set(set_mask, clear_mask, ENABLE_MASK, 0);
   os_delay_us(SLEEP);
-  set_mask = BIT14;
+  set_mask = BIT12;
   clear_mask = 0;
   //ets_printf("  output: 0x%8.8x 0x%8.8x\r\n", set_mask, clear_mask);
   gpio_output_set(set_mask, clear_mask, ENABLE_MASK, 0);
@@ -103,13 +103,13 @@ user_init()
     // Initialize the GPIO subsystem.
     gpio_init();
 
-    //Set GPIO4, 5 and 14 to output mode
+    //Set GPIO4, 5 and 12 to output mode
     PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO4_U, FUNC_GPIO4);
     PIN_FUNC_SELECT(PERIPHS_IO_MUX_GPIO5_U, FUNC_GPIO5);
-    PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTMS_U,  FUNC_GPIO14);
+    PIN_FUNC_SELECT(PERIPHS_IO_MUX_MTDI_U,  FUNC_GPIO12);
 
-    //Set GPIO4, 5 and 14 low
-    gpio_output_set(BIT4|BIT5|BIT14, 0, BIT4|BIT5|BIT14, 0);
+    //Set GPIO4, 5 and 12 low
+    gpio_output_set(BIT4|BIT5|BIT12, 0, BIT4|BIT5|BIT12, 0);
 
     //Disarm timer
     os_timer_disarm(&some_timer);
